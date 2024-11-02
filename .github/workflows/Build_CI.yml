@@ -1,11 +1,48 @@
-name: CI
+name: Build_CI
 on:
   pull_request:
+    - 'main'
+    - 'work'
   push:
     branches:
-      - '**'
+      - 'main'
+      - 'release'
     tags-ignore:
-      - '**'
+      - 'skipCI'
+  workflow_run:
+  merge_group:
+  release:
+  page_build:
+  project:
+  discussion:
+  delete:
+  issues:
+  project_card:
+  pull_request_target:
+  gollum:
+  check_run:
+  public:
+  workflow_dispatch:
+  pull_request_review_comment:
+  workflow_call:
+  repository_dispatch:
+  create:
+  discussion_comment:
+  deployment:
+  deployment_status:
+  branch_protection_rule:
+  label:
+  registry_package:
+  schedule:
+    -
+  fork:
+  issue_comment:
+  milestone:
+  watch:
+  pull_request_review:
+  check_suite:
+  project_column:
+  status:
 
 concurrency:
   group: ${{ github.event_name != 'pull_request' && github.run_id || github.ref }}
@@ -79,7 +116,7 @@ jobs:
           - env_vars: { WIDEMUL: 'int128', RECOVERY: 'yes',              EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes', ELLSWIFT: 'yes' }
           - env_vars: { WIDEMUL: 'int128',                  ECDH: 'yes', EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes' }
           - env_vars: { WIDEMUL: 'int128', ASM: 'x86_64',                                                     ELLSWIFT: 'yes' }
-          - env_vars: {                    RECOVERY: 'yes',              EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes' }
+          - env_vars: { RECOVERY: 'yes',              EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes' }
           - env_vars: { CTIMETESTS: 'no',  RECOVERY: 'yes', ECDH: 'yes', EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes', CPPFLAGS: '-DVERIFY' }
           - env_vars: { BUILD: 'distcheck', WITH_VALGRIND: 'no', CTIMETESTS: 'no', BENCH: 'no' }
           - env_vars: { CPPFLAGS: '-DDETERMINISTIC' }
@@ -230,7 +267,7 @@ jobs:
       fail-fast: false
       matrix:
         configuration:
-          - env_vars: {}
+          - env_vars: { }
           - env_vars: { EXPERIMENTAL: 'yes', ASM: 'arm32' }
 
     env:
