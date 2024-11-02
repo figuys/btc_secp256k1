@@ -34,7 +34,7 @@ Most communication about libsecp256k1 occurs on the GitHub repository: in issues
 Additionally, there is an IRC channel dedicated to libsecp256k1, with biweekly meetings (see channel topic).
 The channel is `#secp256k1` on Libera Chat.
 The easiest way to participate on IRC is with the web client, [web.libera.chat](https://web.libera.chat/#secp256k1).
-Chat history logs can be found at https://gnusha.org/secp256k1/.
+Chat history logs can be found at <https://gnusha.org/secp256k1/>.
 
 ## Contributor workflow & peer review
 
@@ -56,6 +56,7 @@ In addition, libsecp256k1 tries to maintain the following coding conventions:
 * Commits should be atomic and diffs should be easy to read. For this reason, do not mix any formatting fixes or code moves with actual code changes. Make sure each individual commit is hygienic: that it builds successfully on its own without warnings, errors, regressions, or test failures.
 * New code should adhere to the style of existing, in particular surrounding, code. Other than that, we do not enforce strict rules for code formatting.
 * The code conforms to C89. Most notably, that means that only `/* ... */` comments are allowed (no `//` line comments). Moreover, any declarations in a `{ ... }` block (e.g., a function) must appear at the beginning of the block before any statements. When you would like to declare a variable in the middle of a block, you can open a new block:
+
     ```C
     void secp256k_foo(void) {
         unsigned int x;              /* declaration */
@@ -68,6 +69,7 @@ In addition, libsecp256k1 tries to maintain the following coding conventions:
         }
     }
     ```
+
 * Use `unsigned int` instead of just `unsigned`.
 * Use `void *ptr` instead of `void* ptr`.
 * Arguments of the publicly-facing API must have a specific order defined in [include/secp256k1.h](include/secp256k1.h).
@@ -83,20 +85,20 @@ This library aims to have full coverage of reachable lines and branches.
 
 To create a test coverage report, configure with `--enable-coverage` (use of GCC is necessary):
 
-    $ ./configure --enable-coverage
+    ./configure --enable-coverage
 
 Run the tests:
 
-    $ make check
+    make check
 
 To create a report, `gcovr` is recommended, as it includes branch coverage reporting:
 
-    $ gcovr --exclude 'src/bench*' --print-summary
+    gcovr --exclude 'src/bench*' --print-summary
 
 To create a HTML report with coloured and annotated source code:
 
-    $ mkdir -p coverage
-    $ gcovr --exclude 'src/bench*' --html --html-details -o coverage/coverage.html
+    mkdir -p coverage
+    gcovr --exclude 'src/bench*' --html --html-details -o coverage/coverage.html
 
 #### Exhaustive tests
 
