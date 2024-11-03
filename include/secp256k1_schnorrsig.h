@@ -15,7 +15,7 @@ extern "C" {
 
 /** A pointer to a function to deterministically generate a nonce.
  *
- *  Same as secp256k1_nonce function with the exception of accepting an
+ *  Same as secp256k1_nonce function except for accepting an
  *  additional pubkey argument and not requiring an attempt argument. The pubkey
  *  argument can protect signature schemes with key-prefixed challenge hash
  *  inputs against reusing the nonce when signing with the wrong precomputed

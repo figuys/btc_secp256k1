@@ -58,7 +58,7 @@ In addition, secp256k1 tries to maintain the following coding conventions:
   the library without any heap allocations.
 * The tests should cover all lines and branches of the library (see [Test coverage](#coverage)).
 * Operations involving secret data should be tested for being constant time with respect to the secrets (
-  see [src/ctime_tests.c](src/ctime_tests.c)).
+  see [src/ctime_tests.c](../src/ctime_tests.c)).
 * Local variables containing secret data should be cleared explicitly to try to delete secrets from memory.
 * Use `secp256k1_memcmp_var` instead of `memcmp` (see [#823](https://github.com/bitcoin-core/secp256k1/issues/823)).
 * As a rule of thumb, the default values for configuration options should target standard desktop machines and align
@@ -91,7 +91,7 @@ In addition, secp256k1 tries to maintain the following coding conventions:
 
 * Use `unsigned int` instead of just `unsigned`.
 * Use `void *ptr` instead of `void* ptr`.
-* Arguments of the publicly-facing API must have a specific order defined in [include/secp256k1.h](include/secp256k1.h).
+* Arguments of the publicly-facing API must have a specific order defined in [include/secp256k1.h](../include/secp256k1.h).
 * User-facing comment lines in headers should be limited to 80 chars if possible.
 * All identifiers in file scope should start with `secp256k1_`.
 * Avoid trailing whitespace.
@@ -123,7 +123,7 @@ To create a HTML report with coloured and annotated source code:
 
 There are tests of several functions in which a small group replaces secp256k1.
 These tests are *exhaustive* since they provide all elements and scalars of the small group as input arguments (
-see [src/tests_exhaustive.c](src/tests_exhaustive.c)).
+see [src/tests_exhaustive.c](../src/tests_exhaustive.c)).
 
 ### Benchmarks
 

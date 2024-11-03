@@ -7,7 +7,8 @@ Regular releases are releases of a new major or minor version as well as patches
 Maintenance releases, on the other hand, are required for patches of older releases.
 
 You should coordinate with the other maintainers on the release date, if possible.
-This date will be part of the release entry in [CHANGELOG.md](../CHANGELOG.md) and it should match the dates of the
+This date will be part of the release entry in [CHANGELOG.md](../_notices/CHANGELOG.md) and it should match the dates of
+the
 remaining steps in the release process (including the date of the tag and the GitHub release).
 It is best if the maintainers are present during the release, so they can help ensure that the process is followed
 correctly and, in the case of a regular release, they are aware that they should not modify the master branch between
@@ -51,7 +52,7 @@ Perform these checks when reviewing the release PR (see below):
 
 1. Open a PR to the master branch with a commit (using message `"release: prepare for $MAJOR.$MINOR.$PATCH"`, for
    example) that
-	* finalizes the release notes in [CHANGELOG.md](../CHANGELOG.md) by
+	* finalizes the release notes in [CHANGELOG.md](../_notices/CHANGELOG.md) by
 		* adding a section for the release (make sure that the version number is a link to a diff between the previous
 		  and new version),
 		* removing the `[Unreleased]` section header,
@@ -74,10 +75,10 @@ Perform these checks when reviewing the release PR (see below):
 	  `configure.ac`,
 	* increments the `$PATCH` component of `project(secp256k1 VERSION ...)` and `${PROJECT_NAME}_LIB_VERSION_REVISION`
 	  in `CMakeLists.txt`, and
-	* adds an `[Unreleased]` section header to the [CHANGELOG.md](../CHANGELOG.md).
+	* adds an `[Unreleased]` section header to the [CHANGELOG.md](../_notices/CHANGELOG.md).
 
    If other maintainers are not present to approve the PR, it can be merged without ACKs.
-5. Create a new GitHub release with a link to the corresponding entry in [CHANGELOG.md](../CHANGELOG.md).
+5. Create a new GitHub release with a link to the corresponding entry in [CHANGELOG.md](../_notices/CHANGELOG.md).
 6. Send an announcement email to the bitcoin-dev mailing list.
 
 ## Maintenance release
@@ -103,7 +104,7 @@ Note that bug fixes need to be backported only to releases for which no compatib
    git tag -s v$MAJOR.$MINOR.$PATCH -m "secp256k1 $MAJOR.$MINOR.$PATCH"
    git push git@github.com:bitcoin-core/secp256k1.git v$MAJOR.$MINOR.$PATCH
    ```
-6. Create a new GitHub release with a link to the corresponding entry in [CHANGELOG.md](../CHANGELOG.md).
+6. Create a new GitHub release with a link to the corresponding entry in [CHANGELOG.md](../_notices/CHANGELOG.md).
 7. Send an announcement email to the bitcoin-dev mailing list.
 8. Open PR to the master branch that includes a commit (with commit message `"release notes: add $MAJOR.$MINOR.$PATCH"`,
-   for example) that adds release notes to [CHANGELOG.md](../CHANGELOG.md).
+   for example) that adds release notes to [CHANGELOG.md](../_notices/CHANGELOG.md).

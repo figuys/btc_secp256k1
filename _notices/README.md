@@ -127,13 +127,13 @@ In "Developer Command Prompt for VS 2022":
 
 ## Usage examples
 
-Usage examples can be found in the [examples](examples) directory. To compile them you need to configure with
+Usage examples can be found in the [examples](../examples) directory. To compile them you need to configure with
 `--enable-examples`.
 
-- [ECDSA example](examples/ecdsa.c)
-- [Schnorr signatures example](examples/schnorr.c)
-- [Deriving a shared secret (ECDH) example](examples/ecdh.c)
-- [ElligatorSwift key exchange example](examples/ellswift.c)
+- [ECDSA example](../examples/ecdsa.c)
+- [Schnorr signatures example](../examples/schnorr.c)
+- [Deriving a shared secret (ECDH) example](../examples/ecdh.c)
+- [ElligatorSwift key exchange example](../examples/ellswift.c)
 
 To compile the Schnorr signature and ECDH examples, you also need to configure with `--enable-module-schnorrsig` and
 `--enable-module-ecdh`.
