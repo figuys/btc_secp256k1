@@ -43,12 +43,15 @@
         "EXTRAFLAGS",
         "extrakeys",
         "fvisibility",
+        "GSTEP",
+        "hkps",
         "hsort",
         "ifdef",
         "includedir",
         "isystem",
         "kcov",
         "keygeneration",
+        "keyserver",
         "Laan",
         "lbcrypt",
         "LDADD",
@@ -71,6 +74,7 @@
         "musig",
         "noinst",
         "noverify",
+        "openpgp",
         "overlength",
         "Pieter",
         "pkgconfig",
@@ -122,5 +126,6 @@
         "xbrew",
         "xport",
         "xyes"
-    ]
+    ],
+    "sonarlint.pathToCompileCommands": "${workspaceFolder}/compile_commands.json"
 }

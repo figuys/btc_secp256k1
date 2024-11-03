@@ -1,3 +1,8 @@
+
+#ifndef SECP256K1_BUILD
+#define SECP256K1_BUILD
+#endif
+
 #ifndef SECP256K1_CONFIG_H
 #define SECP256K1_CONFIG_H
 
