@@ -1,4 +1,4 @@
-# Test libsecp256k1' group operation implementations using prover.sage
+# Test secp256k1' group operation implementations using prover.sage
 
 import sys
 
@@ -6,7 +6,7 @@ load("group_prover.sage")
 load("weierstrass_prover.sage")
 
 def formula_secp256k1_gej_double_var(a):
-  """libsecp256k1's secp256k1_gej_double_var, used by various addition functions"""
+  """secp256k1's secp256k1_gej_double_var, used by various addition functions"""
   rz = a.Z * a.Y
   s = a.Y^2
   l = a.X^2
@@ -25,7 +25,7 @@ def formula_secp256k1_gej_double_var(a):
   return jacobianpoint(rx, ry, rz)
 
 def formula_secp256k1_gej_add_var(branch, a, b):
-  """libsecp256k1's secp256k1_gej_add_var"""
+  """secp256k1's secp256k1_gej_add_var"""
   if branch == 0:
     return (constraints(), constraints(nonzero={a.Infinity : 'a_infinite'}), b)
   if branch == 1:
@@ -64,7 +64,7 @@ def formula_secp256k1_gej_add_var(branch, a, b):
   return (constraints(), constraints(zero={a.Infinity : 'a_finite', b.Infinity : 'b_finite'}, nonzero={h : 'h!=0'}), jacobianpoint(rx, ry, rz))
 
 def formula_secp256k1_gej_add_ge_var(branch, a, b):
-  """libsecp256k1's secp256k1_gej_add_ge_var, which assume bz==1"""
+  """secp256k1's secp256k1_gej_add_ge_var, which assume bz==1"""
   if branch == 0:
     return (constraints(zero={b.Z - 1 : 'b.z=1'}), constraints(nonzero={a.Infinity : 'a_infinite'}), b)
   if branch == 1:
@@ -100,7 +100,7 @@ def formula_secp256k1_gej_add_ge_var(branch, a, b):
   return (constraints(zero={b.Z - 1 : 'b.z=1'}), constraints(zero={a.Infinity : 'a_finite', b.Infinity : 'b_finite'}, nonzero={h : 'h!=0'}), jacobianpoint(rx, ry, rz))
 
 def formula_secp256k1_gej_add_zinv_var(branch, a, b):
-  """libsecp256k1's secp256k1_gej_add_zinv_var"""
+  """secp256k1's secp256k1_gej_add_zinv_var"""
   bzinv = b.Z^(-1)
   if branch == 0:
     rinf = b.Infinity
@@ -144,7 +144,7 @@ def formula_secp256k1_gej_add_zinv_var(branch, a, b):
   return (constraints(), constraints(zero={a.Infinity : 'a_finite', b.Infinity : 'b_finite'}, nonzero={h : 'h!=0'}), jacobianpoint(rx, ry, rz))
 
 def formula_secp256k1_gej_add_ge(branch, a, b):
-  """libsecp256k1's secp256k1_gej_add_ge"""
+  """secp256k1's secp256k1_gej_add_ge"""
   zeroes = {}
   nonzeroes = {}
   a_infinity = False
@@ -206,7 +206,7 @@ def formula_secp256k1_gej_add_ge(branch, a, b):
   return (constraints(zero={b.Z - 1 : 'b.z=1', b.Infinity : 'b_finite'}), constraints(zero=zeroes, nonzero=nonzeroes), jacobianpoint(rx, ry, rz))
 
 def formula_secp256k1_gej_add_ge_old(branch, a, b):
-  """libsecp256k1's old secp256k1_gej_add_ge, which fails when ay+by=0 but ax!=bx"""
+  """secp256k1's old secp256k1_gej_add_ge, which fails when ay+by=0 but ax!=bx"""
   a_infinity = (branch & 1) != 0
   zero = {}
   nonzero = {}

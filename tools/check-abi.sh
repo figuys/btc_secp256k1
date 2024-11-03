@@ -9,7 +9,7 @@ display_help_and_exit() {
     echo "Usage: $0 [<base_ver> [<new_ver>]]"
     echo ""
     echo "Description: This script uses the ABI Compliance Checker tool to determine if the ABI"
-    echo "             of a new version of libsecp256k1 has changed in a backward-incompatible way."
+    echo "             of a new version of secp256k1 has changed in a backward-incompatible way."
     echo ""
     echo "Options:"
     echo "  base_ver      Specify the base version as a git commit-ish"
@@ -49,7 +49,7 @@ checkout_and_build() {
         -DSECP256K1_BUILD_CTIME_TESTS=OFF \
         -DSECP256K1_BUILD_EXAMPLES=OFF
     cmake --build . -j "$(nproc)"
-    abi-dumper src/libsecp256k1.so -o ABI.dump -lver "$2" -public-headers ../include/
+    abi-dumper src/secp256k1.so -o ABI.dump -lver "$2" -public-headers ../include/
     cd "$_orig_dir"
 }
 
@@ -62,6 +62,6 @@ checkout_and_build "$base_source_dir" "$base_version"
 new_source_dir="$(mktemp -d)"
 checkout_and_build "$new_source_dir" "$new_version"
 
-abi-compliance-checker -lib libsecp256k1 -old "${base_source_dir}/build/ABI.dump" -new "${new_source_dir}/build/ABI.dump"
+abi-compliance-checker -lib secp256k1 -old "${base_source_dir}/build/ABI.dump" -new "${new_source_dir}/build/ABI.dump"
 git worktree remove "$base_source_dir"
 git worktree remove "$new_source_dir"

@@ -1,4 +1,4 @@
-# libsecp256k1
+# secp256k1
 
 ![Dependencies: None](https://img.shields.io/badge/dependencies-none-success)
 [![irc.libera.chat #secp256k1](https://img.shields.io/badge/irc.libera.chat-%23secp256k1-success)](https://web.libera.chat/#secp256k1)
@@ -140,7 +140,7 @@ To compile the Schnorr signature and ECDH examples, you also need to configure w
 
 ## Benchmark
 
-If configured with `--enable-benchmark` (which is the default), binaries for benchmarking the libsecp256k1 functions
+If configured with `--enable-benchmark` (which is the default), binaries for benchmarking the secp256k1 functions
 will be present in the root directory after the build.
 
 To print the benchmark result to the command line:
@@ -155,6 +155,6 @@ To create a CSV file for the benchmark result :
 
 See [SECURITY.md](SECURITY.md)
 
-## Contributing to libsecp256k1
+## Contributing to secp256k1
 
 See [CONTRIBUTING.md](CONTRIBUTING.md)

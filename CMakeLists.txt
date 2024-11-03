@@ -4,7 +4,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 #=============================
 # Project / Package metadata
 #=============================
-project(libsecp256k1
+project(secp256k1
 		# The package (a.k.a. release) version is based on semantic versioning 2.0.0 of
 		# the API. All changes in experimental modules are treated as
 		# backwards-compatible and therefore at most increase the minor version.

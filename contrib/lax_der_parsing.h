@@ -5,7 +5,7 @@
  ***********************************************************************/
 
 /****
- * Please do not link this file directly. It is not part of the libsecp256k1
+ * Please do not link this file directly. It is not part of the secp256k1
  * project and does not promise any stability in its API, functionality or
  * presence. Projects which use this code should instead copy this header
  * and its accompanying .c file directly into their codebase.

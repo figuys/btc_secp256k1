@@ -130,12 +130,12 @@ typedef int (*secp256k1_nonce_function)(
    * https://gcc.gnu.org/wiki/Visibility. */
 # if defined(SECP256K1_BUILD)
 #  if defined(DLL_EXPORT) || defined(SECP256K1_DLL_EXPORT)
-    /* Building libsecp256k1 as a DLL.
+    /* Building secp256k1 as a DLL.
      * 1. If using Libtool, it defines DLL_EXPORT automatically.
      * 2. In other cases, SECP256K1_DLL_EXPORT must be defined. */
 #   define SECP256K1_API extern __declspec (dllexport)
 #  else
-    /* Building libsecp256k1 as a static library on Windows.
+    /* Building secp256k1 as a static library on Windows.
      * No declspec is needed, and so we would want the non-Windows-specific
      * logic below take care of this case. However, this may result in setting
      * __attribute__ ((visibility("default"))), which is supposed to be a noop
@@ -144,17 +144,17 @@ typedef int (*secp256k1_nonce_function)(
      * https://gcc.gnu.org/bugzilla/show_bug.cgi?id=116478 . */
 #   define SECP256K1_API extern
 #  endif
-  /* The user must define SECP256K1_STATIC when consuming libsecp256k1 as a static
+  /* The user must define SECP256K1_STATIC when consuming secp256k1 as a static
    * library on Windows. */
 # elif !defined(SECP256K1_STATIC)
-   /* Consuming libsecp256k1 as a DLL. */
+   /* Consuming secp256k1 as a DLL. */
 #  define SECP256K1_API extern __declspec (dllimport)
 # endif
 #endif
 #ifndef SECP256K1_API
 /* All cases not captured by the Windows-specific logic. */
 # if defined(__GNUC__) && (__GNUC__ >= 4) && defined(SECP256K1_BUILD)
-   /* Building libsecp256k1 using GCC or compatible. */
+   /* Building secp256k1 using GCC or compatible. */
 #  define SECP256K1_API extern __attribute__ ((visibility ("default")))
 # else
    /* Fall back to standard C's extern. */

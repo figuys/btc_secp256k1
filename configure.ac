@@ -17,7 +17,7 @@ define(_LIB_VERSION_CURRENT, 4)
 define(_LIB_VERSION_REVISION, 2)
 define(_LIB_VERSION_AGE, 2)
 
-AC_INIT([libsecp256k1],m4_join([.], _PKG_VERSION_MAJOR, _PKG_VERSION_MINOR, _PKG_VERSION_PATCH)m4_if(_PKG_VERSION_IS_RELEASE, [true], [], [-dev]),[https://github.com/bitcoin-core/secp256k1/issues],[libsecp256k1],[https://github.com/bitcoin-core/secp256k1])
+AC_INIT([secp256k1],m4_join([.], _PKG_VERSION_MAJOR, _PKG_VERSION_MINOR, _PKG_VERSION_PATCH)m4_if(_PKG_VERSION_IS_RELEASE, [true], [], [-dev]),[https://github.com/bitcoin-core/secp256k1/issues],[secp256k1],[https://github.com/bitcoin-core/secp256k1])
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([build-aux/m4])
@@ -448,7 +448,7 @@ fi
 ### Generate output
 ###
 
-AC_CONFIG_FILES([Makefile libsecp256k1.pc])
+AC_CONFIG_FILES([Makefile secp256k1.pc])
 AC_SUBST(SECP_CFLAGS)
 AC_SUBST(SECP_CONFIG_DEFINES)
 AM_CONDITIONAL([ENABLE_COVERAGE], [test x"$enable_coverage" = x"yes"])

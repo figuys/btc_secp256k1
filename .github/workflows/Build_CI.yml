@@ -764,7 +764,7 @@ jobs:
         # Use the bash shell included with Git for Windows.
         shell: bash
         run: |
-          cd build/bin/ReleaseDbg && file *tests.exe bench*.exe libsecp256k1-*.dll || true
+          cd build/bin/ReleaseDbg && file *tests.exe bench*.exe secp256k1-*.dll || true
 
       - name: Check
         run: |
@@ -882,7 +882,7 @@ jobs:
           CI_INSTALL: ${{ runner.temp }}/${{ github.run_id }}${{ github.action }}/install
         run: |
           ./autogen.sh && ./configure --prefix=${{ env.CI_INSTALL }} && make clean && make install && ls -RlAh ${{ env.CI_INSTALL }}
-          gcc -o ecdsa examples/ecdsa.c $(PKG_CONFIG_PATH=${{ env.CI_INSTALL }}/lib/pkgconfig pkg-config --cflags --libs libsecp256k1) -Wl,-rpath,"${{ env.CI_INSTALL }}/lib" && ./ecdsa
+          gcc -o ecdsa examples/ecdsa.c $(PKG_CONFIG_PATH=${{ env.CI_INSTALL }}/lib/pkgconfig pkg-config --cflags --libs secp256k1) -Wl,-rpath,"${{ env.CI_INSTALL }}/lib" && ./ecdsa
 
       - name: Check installation with CMake
         env:

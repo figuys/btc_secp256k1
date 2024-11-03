@@ -5,7 +5,7 @@
  *  gcc -O2 -I secp256k1/src/ -I secp256k1/ break_short.c -lgmp       *
  **********************************************************************/
 
-#include "include/libsecp256k1-config.h"
+#include "include/secp256k1-config.h"
 
 #include <stdio.h>
 #include <stdlib.h>

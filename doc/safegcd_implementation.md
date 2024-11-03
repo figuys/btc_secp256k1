@@ -1,4 +1,4 @@
-# The safegcd implementation in libsecp256k1 explained
+# The safegcd implementation in secp256k1 explained
 
 This document explains the modular inverse and Jacobi symbol implementations in the `src/modinv*.h` files.
 It is based on the paper
@@ -35,6 +35,7 @@ keeps rewriting the variables *f* and *g* alongside a state variable *&delta;* t
 "division step" (referred to as divstep in what follows).
 
 For example, *gcd(21, 14)* would be computed as:
+
 - Start with *&delta;=1 f=21 g=14*
 - Take the third branch: *&delta;=2 f=21 g=7*
 - Take the first branch: *&delta;=-1 f=7 g=-7*
@@ -42,33 +43,36 @@ For example, *gcd(21, 14)* would be computed as:
 - The answer *|f| = 7*.
 
 Why it works:
+
 - Divsteps can be decomposed into two steps (see paragraph 8.2 in the paper):
-  - (a) If *g* is odd, replace *(f,g)* with *(g,g-f)* or (f,g+f), resulting in an even *g*.
-  - (b) Replace *(f,g)* with *(f,g/2)* (where *g* is guaranteed to be even).
+	- (a) If *g* is odd, replace *(f,g)* with *(g,g-f)* or (f,g+f), resulting in an even *g*.
+	- (b) Replace *(f,g)* with *(f,g/2)* (where *g* is guaranteed to be even).
 - Neither of those two operations change the GCD:
-  - For (a), assume *gcd(f,g)=c*, then it must be the case that *f=a&thinsp;c* and *g=b&thinsp;c* for some integers *a*
-    and *b*. As *(g,g-f)=(b&thinsp;c,(b-a)c)* and *(f,f+g)=(a&thinsp;c,(a+b)c)*, the result clearly still has
-    common factor *c*. Reasoning in the other direction shows that no common factor can be added by
-    doing so either.
-  - For (b), we know that *f* is odd, so *gcd(f,g)* clearly has no factor *2*, and we can remove
-    it from *g*.
+	- For (a), assume *gcd(f,g)=c*, then it must be the case that *f=a&thinsp;c* and *g=b&thinsp;c* for some integers
+	  *a*
+	  and *b*. As *(g,g-f)=(b&thinsp;c,(b-a)c)* and *(f,f+g)=(a&thinsp;c,(a+b)c)*, the result clearly still has
+	  common factor *c*. Reasoning in the other direction shows that no common factor can be added by
+	  doing so either.
+	- For (b), we know that *f* is odd, so *gcd(f,g)* clearly has no factor *2*, and we can remove
+	  it from *g*.
 - The algorithm will eventually converge to *g=0*. This is proven in the paper (see theorem G.3).
 - It follows that eventually we find a final value *f'* for which *gcd(f,g) = gcd(f',0)*. As the
   gcd of *f'* and *0* is *|f'|* by definition, that is our answer.
 
-Compared to more [traditional GCD algorithms](https://en.wikipedia.org/wiki/Euclidean_algorithm), this one has the property of only ever looking at
+Compared to more [traditional GCD algorithms](https://en.wikipedia.org/wiki/Euclidean_algorithm), this one has the
+property of only ever looking at
 the low-order bits of the variables to decide the next steps, and being easy to make
 constant-time (in more low-level languages than Python). The *&delta;* parameter is necessary to
 guide the algorithm towards shrinking the numbers' magnitudes without explicitly needing to look
 at high order bits.
 
 Properties that will become important later:
+
 - Performing more divsteps than needed is not a problem, as *f* does not change anymore after *g=0*.
 - Only even numbers are divided by *2*. This means that when reasoning about it algebraically we
   do not need to worry about rounding.
 - At every point during the algorithm's execution the next *N* steps only depend on the bottom *N*
   bits of *f* and *g*, and on *&delta;*.
-
 
 ## 2. From GCDs to modular inverses
 
@@ -124,7 +128,6 @@ is different from the paper. There (see paragraph 12.1 in the paper) a transitio
 entire computation is determined (see section 3 below) and the inverse is computed from that.
 The approach here avoids the need for 2x2 matrix multiplications of various sizes, and appears to
 be faster at the level of optimization we're able to do in C.
-
 
 ## 3. Batching multiple divsteps
 
@@ -184,7 +187,8 @@ We still need functions to compute:
   [ out_e ]   (        [ q,  r ])   [ in_e ]
 ```
 
-Because the divsteps transformation only ever divides even numbers by two, the result of *t&thinsp;[f,g]* is always even. When *t* is a composition of *N* divsteps, it follows that the resulting *f*
+Because the divsteps transformation only ever divides even numbers by two, the result of *t&thinsp;[f,g]* is always
+even. When *t* is a composition of *N* divsteps, it follows that the resulting *f*
 and *g* will be multiple of *2<sup>N</sup>*, and division by *2<sup>N</sup>* is simply shifting them down:
 
 ```python
@@ -199,7 +203,8 @@ def update_fg(f, g, t):
     return cf >> N, cg >> N
 ```
 
-The same is not true for *d* and *e*, and we need an equivalent of the `div2` function for division by *2<sup>N</sup> mod M*.
+The same is not true for *d* and *e*, and we need an equivalent of the `div2` function for division by *2<sup>N</sup>
+mod M*.
 This is easy if we have precomputed *1/M mod 2<sup>N</sup>* (which always exists for odd *M*):
 
 ```python
@@ -247,7 +252,6 @@ because once *g=0*, further divsteps do not affect *f*, *g*, *d*, or *e* anymore
 increasing). For variable time code such excess iterations will be mostly optimized away in later
 sections.
 
-
 ## 4. Avoiding modulus operations
 
 So far, there are two places where we compute a remainder of big numbers modulo *M*: at the end of
@@ -276,7 +280,8 @@ Let's look at bounds on the ranges of these numbers. It can be shown that *|u|+|
 never exceed *2<sup>N</sup>* (see paragraph 8.3 in the paper), and thus a multiplication with *t* will have
 outputs whose absolute values are at most *2<sup>N</sup>* times the maximum absolute input value. In case the
 inputs *d* and *e* are in *(-M,M)*, which is certainly true for the initial values *d=0* and *e=1* assuming
-*M > 1*, the multiplication results in numbers in range *(-2<sup>N</sup>M,2<sup>N</sup>M)*. Subtracting less than *2<sup>N</sup>*
+*M > 1*, the multiplication results in numbers in range *(-2<sup>N</sup>M,2<sup>N</sup>M)*. Subtracting less than
+*2<sup>N</sup>*
 times *M* to cancel out *N* bits brings that up to *(-2<sup>N+1</sup>M,2<sup>N</sup>M)*, and
 dividing by *2<sup>N</sup>* at the end takes it to *(-2M,M)*. Another application of `update_de` would take that
 to *(-3M,2M)*, and so forth. This progressive expansion of the variables' ranges can be
@@ -391,7 +396,6 @@ And calling it in `modinv` is simply:
    return normalize(f, d, M)
 ```
 
-
 ## 5. Constant-time operation
 
 The primary selling point of the algorithm is fast constant-time operation. What code flow still
@@ -446,7 +450,8 @@ in constant-time form as:
 
 To use that trick, we need a helper mask variable *c1* that resolves the condition *&delta;>0* to *-1*
 (if true) or *0* (if false). We compute *c1* using right shifting, which is equivalent to dividing by
-the specified power of *2* and rounding down (in Python, and also in C under the assumption of a typical two's complement system; see
+the specified power of *2* and rounding down (in Python, and also in C under the assumption of a typical two's
+complement system; see
 `assumptions.h` for tests that this is the case). Right shifting by *63* thus maps all
 numbers in range *[-2<sup>63</sup>,0)* to *-1*, and numbers in range *[0,2<sup>63</sup>)* to *0*.
 
@@ -540,7 +545,6 @@ also apply all *f* operations to *u*, *v* and all *g* operations to *q*, *r*), a
 These bit fiddling tricks can also be used to make the conditional negations and additions in
 `update_de` and `normalize` constant-time.
 
-
 ## 6. Variable-time optimizations
 
 In section 5, we modified the `divsteps_n_matrix` function (and a few others) to be constant time.
@@ -605,7 +609,8 @@ becomes negative, or when *i* reaches *0*. Combined, this is equivalent to addin
 *g* to cancel out multiple bottom bits, and then shifting them out.
 
 It is easy to find what that multiple is: we want a number *w* such that *g+w&thinsp;f* has a few bottom
-zero bits. If that number of bits is *L*, we want *g+w&thinsp;f mod 2<sup>L</sup> = 0*, or *w = -g/f mod 2<sup>L</sup>*. Since *f*
+zero bits. If that number of bits is *L*, we want *g+w&thinsp;f mod 2<sup>L</sup> = 0*, or *w = -g/f mod 2<sup>L</sup>*.
+Since *f*
 is odd, such a *w* exists for any *L*. *L* cannot be more than *i* steps (as we'd finish the loop before
 doing more) or more than *&eta;+1* steps (as we'd run `eta, f, g = -eta, g, -f` at that point), but
 apart from that, we're only limited by the complexity of computing *w*.
@@ -642,18 +647,17 @@ some can be found in Hacker's Delight second edition by Henry S. Warren, Jr. pag
 Here we need the negated modular inverse, which is a simple transformation of those:
 
 - Instead of a 3-bit table:
-  - *-f* or *f ^ 6*
+	- *-f* or *f ^ 6*
 - Instead of a 4-bit table:
-  - *1 - f(f + 1)*
-  - *-(f + (((f + 1) & 4) << 1))*
+	- *1 - f(f + 1)*
+	- *-(f + (((f + 1) & 4) << 1))*
 - For larger tables the following technique can be used: if *w=-1/f mod 2<sup>L</sup>*, then *w(w&thinsp;f+2)* is
   *-1/f mod 2<sup>2L</sup>*. This allows extending the previous formulas (or tables). In particular we
   have this 6-bit function (based on the 3-bit function above):
-  - *f(f<sup>2</sup> - 2)*
+	- *f(f<sup>2</sup> - 2)*
 
 This loop, again extended to also handle *u*, *v*, *q*, and *r* alongside *f* and *g*, placed in
 `divsteps_n_matrix`, gives a significantly faster, but non-constant time version.
-
 
 ## 7. Final Python version
 
@@ -776,6 +780,7 @@ We can also use a similar approach to calculate Jacobi symbol *(x | M)* by keepi
 extra variable *j*, for which at every step *(x | M) = j (g | f)*. As we update *f* and *g*, we
 make corresponding updates to *j* using
 [properties of the Jacobi symbol](https://en.wikipedia.org/wiki/Jacobi_symbol#Properties):
+
 * *((g/2) | f)* is either *(g | f)* or *-(g | f)*, depending on the value of *f mod 8* (negating if it's *3* or *5*).
 * *(f | g)* is either *(g | f)* or *-(g | f)*, depending on *f mod 4* and *g mod 4* (negating if both are *3*).
 
@@ -805,6 +810,7 @@ that the vast majority of nonzero inputs converge to *f=g=gcd(f<sub>0</sub>, g<s
 number of steps proportional to their logarithm.
 
 Note that:
+
 - We require inputs to satisfy *gcd(x, M) = 1*, as otherwise *f=1* is not reached.
 - We require inputs *x &neq; 0*, because applying posdivstep with *g=0* has no effect.
 - We need to update the termination condition from *g=0* to *f=1*.
