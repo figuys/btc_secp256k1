@@ -1,8 +1,9 @@
 name: Build_CI
 on:
   pull_request:
-    - 'main'
-    - 'work'
+    branches:
+      - 'main'
+      - 'work'
   push:
     branches:
       - 'main'
