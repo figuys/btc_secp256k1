@@ -1,17 +1,4 @@
-bench
-bench_ecmult
-bench_internal
-noverify_tests
-tests
-exhaustive_tests
-precompute_ecmult_gen
-precompute_ecmult
-ctime_tests
-ecdh_example
-ecdsa_example
-schnorr_example
-ellswift_example
-musig_example
+
 *.exe
 *.so
 *.a
@@ -20,8 +7,6 @@ musig_example
 *.trs
 *.sage.py
 
-Makefile
-configure
 .libs/
 Makefile.in
 aclocal.m4
