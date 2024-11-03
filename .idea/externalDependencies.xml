@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalDependencies">
+    <plugin id="com.intellij.c.performanceTesting" />
+    <plugin id="com.intellij.cidr.lang" />
+    <plugin id="com.jetbrains.clion.plugins.packageManager" />
+    <plugin id="org.jetbrains.plugins.clion.radler" />
+  </component>
+</project>
