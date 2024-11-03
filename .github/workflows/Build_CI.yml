@@ -7,9 +7,8 @@ on:
   push:
     branches:
       - 'main'
-      - 'release'
     tags-ignore:
-      - 'skipCI'
+      - 'skipBuild_CI'
 
 concurrency:
   group: ${{ github.event_name != 'pull_request' && github.run_id || github.ref }}
@@ -83,7 +82,7 @@ jobs:
           - env_vars: { WIDEMUL: 'int128', RECOVERY: 'yes',              EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes', ELLSWIFT: 'yes' }
           - env_vars: { WIDEMUL: 'int128',                  ECDH: 'yes', EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes' }
           - env_vars: { WIDEMUL: 'int128', ASM: 'x86_64',                                                     ELLSWIFT: 'yes' }
-          - env_vars: { RECOVERY: 'yes',              EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes' }
+          - env_vars: {                    RECOVERY: 'yes',              EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes' }
           - env_vars: { CTIMETESTS: 'no',  RECOVERY: 'yes', ECDH: 'yes', EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes', CPPFLAGS: '-DVERIFY' }
           - env_vars: { BUILD: 'distcheck', WITH_VALGRIND: 'no', CTIMETESTS: 'no', BENCH: 'no' }
           - env_vars: { CPPFLAGS: '-DDETERMINISTIC' }
@@ -234,7 +233,7 @@ jobs:
       fail-fast: false
       matrix:
         configuration:
-          - env_vars: { }
+          - env_vars: {}
           - env_vars: { EXPERIMENTAL: 'yes', ASM: 'arm32' }
 
     env:
