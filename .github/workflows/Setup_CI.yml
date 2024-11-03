@@ -1,24 +1,22 @@
-name: Valid_QA
+name: Setup_CI
 
 on:
-  workflow_dispatch:
-  pull_request:
-    branches:
-      - '*'
-  push:
-    branches:
-      - 'main'
-      - 'work'
-      - '/release/*'
+  workflow_call:
+    secrets:
+      inherit
+
+concurrency:
+  group: ${{ github.event_name != 'pull_request' && github.run_id || github.ref }}
+  cancel-in-progress: true
 
 jobs:
 
-  setup_ci:
+  setup:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - run: ./autogen.sh && ./configure --enable-dev-mode && make distcheck
 
       - name: Check installation with Autotools
@@ -35,29 +33,3 @@ jobs:
         run: |
           cmake -B ${{ env.CI_BUILD }} -DCMAKE_SETUP_PREFIX=${{ env.CI_SETUP }} && cmake --build ${{ env.CI_BUILD }} && cmake --install ${{ env.CI_BUILD }} && ls -RlAh ${{ env.CI_SETUP }}
           gcc -o ecdsa examples/ecdsa.c -I ${{ env.CI_SETUP }}/include -L ${{ env.CI_SETUP }}/lib*/ -l secp256k1 -Wl,-rpath,"${{ env.CI_SETUP }}/lib",-rpath,"${{ env.CI_SETUP }}/lib64" && ./ecdsa
-
-  qodana:
-    runs-on: ubuntu-latest
-    needs: setup_ci
-    permissions:
-      contents: write
-      pull-requests: write
-      checks: write
-    steps:
-
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
-
-      - name: Qodana Scan
-        uses: JetBrains/qodana-action@v2024.2
-        with:
-          pr-mode: false
-          args: --linter,jetbrains/qodana-clang:2024.2-eap,--apply-fixes
-          push-fixes: pull-request
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json

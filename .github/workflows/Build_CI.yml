@@ -1,4 +1,5 @@
 name: Build_CI
+
 on:
   pull_request:
     branches:
@@ -8,29 +9,27 @@ on:
     branches:
       - 'main'
     tags-ignore:
-      - 'skipBuild_CI'
+      - 'Skip_CI'
 
 concurrency:
   group: ${{ github.event_name != 'pull_request' && github.run_id || github.ref }}
   cancel-in-progress: true
 
 env:
-  ### compiler options
-  HOST:
-  WRAPPER_CMD:
-  # Specific warnings can be disabled with -Wno-error=foo.
-  # -pedantic-errors is not equivalent to -Werror=pedantic and thus not implied by -Werror according to the GCC manual.
+  # build cmd config
+  HOST: ''
+  WRAPPER_CMD: ''
   WERROR_CFLAGS: '-Werror -pedantic-errors'
   MAKEFLAGS: '-j4'
   BUILD: 'check'
-  ### secp256k1 config
+  # secp256k1 config
   ECMULTWINDOW: 15
   ECMULTGENKB: 86
   ASM: 'no'
   WIDEMUL: 'auto'
   WITH_VALGRIND: 'yes'
-  EXTRAFLAGS:
-  ### secp256k1 modules
+  EXTRAFLAGS: ''
+  # secp256k1 modules
   EXPERIMENTAL: 'no'
   ECDH: 'no'
   RECOVERY: 'no'
@@ -38,23 +37,23 @@ env:
   SCHNORRSIG: 'no'
   MUSIG: 'no'
   ELLSWIFT: 'no'
-  ### test options
+  # test options
   SECP256K1_TEST_ITERS: 64
   BENCH: 'yes'
   SECP256K1_BENCH_ITERS: 2
   CTIMETESTS: 'yes'
-  # Compile and run the examples.
+  # run examples.
   EXAMPLES: 'yes'
 
 jobs:
+
   docker_cache:
     name: "Build Docker image"
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Docker Buildx
+      - name: Buildx in Docker
         uses: docker/setup-buildx-action@v3
         with:
-          # See: https://github.com/moby/buildkit/issues/3969.
           driver-opts: |
             network=host
 
@@ -731,7 +730,6 @@ jobs:
 
   win64-native:
     name: ${{ matrix.configuration.job_name }}
-    # See: https://github.com/actions/runner-images#available-images.
     runs-on: windows-2022
 
     strategy:
@@ -773,9 +771,10 @@ jobs:
           build\bin\ReleaseDbg\bench_internal.exe
           build\bin\ReleaseDbg\bench.exe
 
+
+
   win64-native-headers:
     name: "x64 (MSVC): C++ (public headers)"
-    # See: https://github.com/actions/runner-images#available-images.
     runs-on: windows-2022
 
     steps:
@@ -788,6 +787,11 @@ jobs:
       - name: C++ (public headers)
         run: |
           cl.exe -c -WX -TP include/*.h
+
+
+
+
+
 
   cxx_fpermissive_debian:
     name: "C++ -fpermissive (entire project)"
@@ -852,6 +856,9 @@ jobs:
             g++ -Werror include/*.h
             clang -Werror -x c++-header include/*.h
 
+
+
+
   sage:
     name: "SageMath prover"
     runs-on: ubuntu-latest
@@ -868,26 +875,29 @@ jobs:
           cd sage
           sage prove_group_implementations.sage
 
-  release:
+
+
+
+
+  setup:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - run: ./autogen.sh && ./configure --enable-dev-mode && make distcheck
 
       - name: Check installation with Autotools
         env:
-          CI_INSTALL: ${{ runner.temp }}/${{ github.run_id }}${{ github.action }}/install
+          CI_SETUP: ${{ runner.temp }}/${{ github.run_id }}${{ github.action }}/install
         run: |
-          ./autogen.sh && ./configure --prefix=${{ env.CI_INSTALL }} && make clean && make install && ls -RlAh ${{ env.CI_INSTALL }}
-          gcc -o ecdsa examples/ecdsa.c $(PKG_CONFIG_PATH=${{ env.CI_INSTALL }}/lib/pkgconfig pkg-config --cflags --libs secp256k1) -Wl,-rpath,"${{ env.CI_INSTALL }}/lib" && ./ecdsa
+          ./autogen.sh && ./configure --prefix=${{ env.CI_SETUP }} && make clean && make install && ls -RlAh ${{ env.CI_SETUP }}
+          gcc -o ecdsa examples/ecdsa.c $(PKG_CONFIG_PATH=${{ env.CI_SETUP }}/lib/pkgconfig pkg-config --cflags --libs secp256k1) -Wl,-rpath,"${{ env.CI_SETUP }}/lib" && ./ecdsa
 
       - name: Check installation with CMake
         env:
           CI_BUILD: ${{ runner.temp }}/${{ github.run_id }}${{ github.action }}/build
-          CI_INSTALL: ${{ runner.temp }}/${{ github.run_id }}${{ github.action }}/install
+          CI_SETUP: ${{ runner.temp }}/${{ github.run_id }}${{ github.action }}/setup
         run: |
-          cmake -B ${{ env.CI_BUILD }} -DCMAKE_INSTALL_PREFIX=${{ env.CI_INSTALL }} && cmake --build ${{ env.CI_BUILD }} && cmake --install ${{ env.CI_BUILD }} && ls -RlAh ${{ env.CI_INSTALL }}
-          gcc -o ecdsa examples/ecdsa.c -I ${{ env.CI_INSTALL }}/include -L ${{ env.CI_INSTALL }}/lib*/ -l secp256k1 -Wl,-rpath,"${{ env.CI_INSTALL }}/lib",-rpath,"${{ env.CI_INSTALL }}/lib64" && ./ecdsa
+          cmake -B ${{ env.CI_BUILD }} -DCMAKE_SETUP_PREFIX=${{ env.CI_SETUP }} && cmake --build ${{ env.CI_BUILD }} && cmake --install ${{ env.CI_BUILD }} && ls -RlAh ${{ env.CI_SETUP }}
+          gcc -o ecdsa examples/ecdsa.c -I ${{ env.CI_SETUP }}/include -L ${{ env.CI_SETUP }}/lib*/ -l secp256k1 -Wl,-rpath,"${{ env.CI_SETUP }}/lib",-rpath,"${{ env.CI_SETUP }}/lib64" && ./ecdsa

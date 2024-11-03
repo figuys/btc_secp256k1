@@ -191,11 +191,11 @@ option(SECP256K1_BUILD_EXAMPLES "Build examples." OFF)
 if (MSVC)
 	string(REGEX REPLACE "/DNDEBUG[ \t\r\n]*" "" CMAKE_C_FLAGS_RELEASEDBG "${CMAKE_C_FLAGS_RELEASEDBG}")
 	string(REGEX REPLACE "/DNDEBUG[ \t\r\n]*" "" CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")
-	string(REGEX REPLACE "/DNDEBUG[ \t\r\n]*" "" CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL}")
+	string(REGEX REPLACE "/DNDEBUG[ \t\r\n]*" "" CMAKE_C_FLAGS_RELEASEMIN "${CMAKE_C_FLAGS_RELEASEMIN}")
 else ()
 	string(REGEX REPLACE "-DNDEBUG[ \t\r\n]*" "" CMAKE_C_FLAGS_RELEASEDBG "${CMAKE_C_FLAGS_RELEASEDBG}")
 	string(REGEX REPLACE "-DNDEBUG[ \t\r\n]*" "" CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")
-	string(REGEX REPLACE "-DNDEBUG[ \t\r\n]*" "" CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL}")
+	string(REGEX REPLACE "-DNDEBUG[ \t\r\n]*" "" CMAKE_C_FLAGS_RELEASEMIN "${CMAKE_C_FLAGS_RELEASEMIN}")
 	# Prefer -O2 optimization level. (-O3 is CMake's default for Release for many compilers.)
 	string(REGEX REPLACE "-O3( |$)" "-O2\\1" CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")
 endif ()
@@ -223,13 +223,13 @@ if (PROJECT_IS_TOP_LEVEL)
 	get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 	set(default_build_type "ReleaseDbg")
 	if (is_multi_config)
-		set(CMAKE_CONFIGURATION_TYPES "${default_build_type}" "Release" "Debug" "MinSizeRel" "Coverage" CACHE STRING
+		set(CMAKE_CONFIGURATION_TYPES "${default_build_type}" "Release" "Debug" "ReleaseMin" "Coverage" CACHE STRING
 				"Supported configuration types."
 				FORCE
 				)
 	else ()
 		set_property(CACHE CMAKE_BUILD_TYPE PROPERTY
-				STRINGS "${default_build_type}" "Release" "Debug" "MinSizeRel" "Coverage"
+				STRINGS "${default_build_type}" "Release" "Debug" "ReleaseMin" "Coverage"
 				)
 		if (NOT CMAKE_BUILD_TYPE)
 			message(STATUS "Setting build type to \"${default_build_type}\" as none was specified")
