@@ -45,6 +45,5 @@ coverage.*.html
 *.gcno
 *.gcov
 
-# Default CMake build directory.
-/build
-/out
+.build
+.out
