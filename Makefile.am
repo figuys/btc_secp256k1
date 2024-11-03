@@ -4,7 +4,7 @@ ACLOCAL_AMFLAGS = -I build-aux/m4
 # which does not have an explicit foo_CFLAGS variable set.
 AM_CFLAGS = $(SECP_CFLAGS)
 
-lib_LTLIBRARIES = secp256k1.la
+lib_LTLIBRARIES = libsecp256k1.la
 include_HEADERS = include/secp256k1.h
 include_HEADERS += include/secp256k1_preallocated.h
 noinst_HEADERS =
