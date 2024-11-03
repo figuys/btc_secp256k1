@@ -44,6 +44,6 @@ coverage.*.html
 *.gcda
 *.gcno
 *.gcov
-
+.cache
 .build
 .out

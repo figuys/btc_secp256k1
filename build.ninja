@@ -12,7 +12,7 @@
 
 # =============================================================================
 # Project: libsecp256k1
-# Configurations: RelWithDebInfo
+# Configurations: ReleaseDbg
 # =============================================================================
 
 #############################################
@@ -24,7 +24,7 @@ ninja_required_version = 1.5
 #############################################
 # Set configuration variable for custom commands.
 
-CONFIGURATION = RelWithDebInfo
+CONFIGURATION = ReleaseDbg
 # =============================================================================
 # Include auxiliary files.
 
@@ -131,7 +131,7 @@ build install/strip: phony CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_secp256k1_precomputed: phony || .
 
-build src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o: C_COMPILER__secp256k1_precomputed_unscanned_RelWithDebInfo /home/iam/repos/secp256k1/src/precomputed_ecmult.c || cmake_object_order_depends_target_secp256k1_precomputed
+build src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o: C_COMPILER__secp256k1_precomputed_unscanned_ReleaseDbg /home/iam/repos/secp256k1/src/precomputed_ecmult.c || cmake_object_order_depends_target_secp256k1_precomputed
   DEFINES = -DCOMB_BLOCKS=43 -DCOMB_TEETH=6 -DECMULT_WINDOW_SIZE=15 -DENABLE_MODULE_ECDH=1 -DENABLE_MODULE_ELLSWIFT=1 -DENABLE_MODULE_EXTRAKEYS=1 -DENABLE_MODULE_MUSIG=1 -DENABLE_MODULE_SCHNORRSIG=1 -DUSE_ASM_X86_64=1 -DVALGRIND
   DEP_FILE = src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o.d
   FLAGS = -O2 -g  -std=c90 -fPIC -fvisibility=hidden -fdiagnostics-color=always -pedantic -Wall -Wcast-align -Wcast-align=strict -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef
@@ -140,7 +140,7 @@ build src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o: C_COMPILE
   TARGET_COMPILE_PDB = src/CMakeFiles/secp256k1_precomputed.dir/
   TARGET_PDB = ""
 
-build src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o: C_COMPILER__secp256k1_precomputed_unscanned_RelWithDebInfo /home/iam/repos/secp256k1/src/precomputed_ecmult_gen.c || cmake_object_order_depends_target_secp256k1_precomputed
+build src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o: C_COMPILER__secp256k1_precomputed_unscanned_ReleaseDbg /home/iam/repos/secp256k1/src/precomputed_ecmult_gen.c || cmake_object_order_depends_target_secp256k1_precomputed
   DEFINES = -DCOMB_BLOCKS=43 -DCOMB_TEETH=6 -DECMULT_WINDOW_SIZE=15 -DENABLE_MODULE_ECDH=1 -DENABLE_MODULE_ELLSWIFT=1 -DENABLE_MODULE_EXTRAKEYS=1 -DENABLE_MODULE_MUSIG=1 -DENABLE_MODULE_SCHNORRSIG=1 -DUSE_ASM_X86_64=1 -DVALGRIND
   DEP_FILE = src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o.d
   FLAGS = -O2 -g  -std=c90 -fPIC -fvisibility=hidden -fdiagnostics-color=always -pedantic -Wall -Wcast-align -Wcast-align=strict -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef
@@ -165,7 +165,7 @@ build src/secp256k1_precomputed: phony src/CMakeFiles/secp256k1_precomputed.dir/
 
 build cmake_object_order_depends_target_secp256k1: phony || cmake_object_order_depends_target_secp256k1_precomputed
 
-build src/CMakeFiles/secp256k1.dir/secp256k1.c.o: C_COMPILER__secp256k1_unscanned_RelWithDebInfo /home/iam/repos/secp256k1/src/secp256k1.c || cmake_object_order_depends_target_secp256k1
+build src/CMakeFiles/secp256k1.dir/secp256k1.c.o: C_COMPILER__secp256k1_unscanned_ReleaseDbg /home/iam/repos/secp256k1/src/secp256k1.c || cmake_object_order_depends_target_secp256k1
   DEFINES = -DCOMB_BLOCKS=43 -DCOMB_TEETH=6 -DECMULT_WINDOW_SIZE=15 -DENABLE_MODULE_ECDH=1 -DENABLE_MODULE_ELLSWIFT=1 -DENABLE_MODULE_EXTRAKEYS=1 -DENABLE_MODULE_MUSIG=1 -DENABLE_MODULE_SCHNORRSIG=1 -DUSE_ASM_X86_64=1 -DVALGRIND -Dsecp256k1_EXPORTS
   DEP_FILE = src/CMakeFiles/secp256k1.dir/secp256k1.c.o.d
   FLAGS = -O2 -g  -std=c90 -fPIC -fvisibility=hidden -fdiagnostics-color=always -pedantic -Wall -Wcast-align -Wcast-align=strict -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef
@@ -182,7 +182,7 @@ build src/CMakeFiles/secp256k1.dir/secp256k1.c.o: C_COMPILER__secp256k1_unscanne
 #############################################
 # Link the shared library lib/libsecp256k1.so.2.2.2
 
-build lib/libsecp256k1.so.2.2.2: C_SHARED_LIBRARY_LINKER__secp256k1_RelWithDebInfo src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o src/CMakeFiles/secp256k1.dir/secp256k1.c.o || src/secp256k1_precomputed
+build lib/libsecp256k1.so.2.2.2: C_SHARED_LIBRARY_LINKER__secp256k1_ReleaseDbg src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o src/CMakeFiles/secp256k1.dir/secp256k1.c.o || src/secp256k1_precomputed
   LANGUAGE_COMPILE_FLAGS = -O2 -g
   OBJECT_DIR = src/CMakeFiles/secp256k1.dir
   POST_BUILD = :
@@ -210,7 +210,7 @@ build lib/libsecp256k1.so.2 lib/libsecp256k1.so: CMAKE_SYMLINK_LIBRARY lib/libse
 
 build cmake_object_order_depends_target_bench: phony || cmake_object_order_depends_target_secp256k1
 
-build src/CMakeFiles/bench.dir/bench.c.o: C_COMPILER__bench_unscanned_RelWithDebInfo /home/iam/repos/secp256k1/src/bench.c || cmake_object_order_depends_target_bench
+build src/CMakeFiles/bench.dir/bench.c.o: C_COMPILER__bench_unscanned_ReleaseDbg /home/iam/repos/secp256k1/src/bench.c || cmake_object_order_depends_target_bench
   DEFINES = -DCOMB_BLOCKS=43 -DCOMB_TEETH=6 -DECMULT_WINDOW_SIZE=15 -DENABLE_MODULE_ECDH=1 -DENABLE_MODULE_ELLSWIFT=1 -DENABLE_MODULE_EXTRAKEYS=1 -DENABLE_MODULE_MUSIG=1 -DENABLE_MODULE_SCHNORRSIG=1 -DUSE_ASM_X86_64=1 -DVALGRIND
   DEP_FILE = src/CMakeFiles/bench.dir/bench.c.o.d
   FLAGS = -O2 -g  -std=c90 -fvisibility=hidden -fdiagnostics-color=always -pedantic -Wall -Wcast-align -Wcast-align=strict -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef
@@ -227,7 +227,7 @@ build src/CMakeFiles/bench.dir/bench.c.o: C_COMPILER__bench_unscanned_RelWithDeb
 #############################################
 # Link the executable bin/bench
 
-build bin/bench: C_EXECUTABLE_LINKER__bench_RelWithDebInfo src/CMakeFiles/bench.dir/bench.c.o | lib/libsecp256k1.so.2.2.2 || lib/libsecp256k1.so lib/libsecp256k1.so
+build bin/bench: C_EXECUTABLE_LINKER__bench_ReleaseDbg src/CMakeFiles/bench.dir/bench.c.o | lib/libsecp256k1.so.2.2.2 || lib/libsecp256k1.so lib/libsecp256k1.so
   FLAGS = -O2 -g
   LINK_LIBRARIES = -Wl,-rpath,/home/iam/repos/secp256k1/lib  lib/libsecp256k1.so.2.2.2
   OBJECT_DIR = src/CMakeFiles/bench.dir
@@ -246,7 +246,7 @@ build bin/bench: C_EXECUTABLE_LINKER__bench_RelWithDebInfo src/CMakeFiles/bench.
 
 build cmake_object_order_depends_target_bench_internal: phony || cmake_object_order_depends_target_secp256k1_precomputed
 
-build src/CMakeFiles/bench_internal.dir/bench_internal.c.o: C_COMPILER__bench_internal_unscanned_RelWithDebInfo /home/iam/repos/secp256k1/src/bench_internal.c || cmake_object_order_depends_target_bench_internal
+build src/CMakeFiles/bench_internal.dir/bench_internal.c.o: C_COMPILER__bench_internal_unscanned_ReleaseDbg /home/iam/repos/secp256k1/src/bench_internal.c || cmake_object_order_depends_target_bench_internal
   DEFINES = -DCOMB_BLOCKS=43 -DCOMB_TEETH=6 -DECMULT_WINDOW_SIZE=15 -DENABLE_MODULE_ECDH=1 -DENABLE_MODULE_ELLSWIFT=1 -DENABLE_MODULE_EXTRAKEYS=1 -DENABLE_MODULE_MUSIG=1 -DENABLE_MODULE_SCHNORRSIG=1 -DUSE_ASM_X86_64=1 -DVALGRIND
   DEP_FILE = src/CMakeFiles/bench_internal.dir/bench_internal.c.o.d
   FLAGS = -O2 -g  -std=c90 -fvisibility=hidden -fdiagnostics-color=always -pedantic -Wall -Wcast-align -Wcast-align=strict -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef
@@ -263,7 +263,7 @@ build src/CMakeFiles/bench_internal.dir/bench_internal.c.o: C_COMPILER__bench_in
 #############################################
 # Link the executable bin/bench_internal
 
-build bin/bench_internal: C_EXECUTABLE_LINKER__bench_internal_RelWithDebInfo src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o src/CMakeFiles/bench_internal.dir/bench_internal.c.o || src/secp256k1_precomputed
+build bin/bench_internal: C_EXECUTABLE_LINKER__bench_internal_ReleaseDbg src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o src/CMakeFiles/bench_internal.dir/bench_internal.c.o || src/secp256k1_precomputed
   FLAGS = -O2 -g
   OBJECT_DIR = src/CMakeFiles/bench_internal.dir
   POST_BUILD = :
@@ -281,7 +281,7 @@ build bin/bench_internal: C_EXECUTABLE_LINKER__bench_internal_RelWithDebInfo src
 
 build cmake_object_order_depends_target_bench_ecmult: phony || cmake_object_order_depends_target_secp256k1_precomputed
 
-build src/CMakeFiles/bench_ecmult.dir/bench_ecmult.c.o: C_COMPILER__bench_ecmult_unscanned_RelWithDebInfo /home/iam/repos/secp256k1/src/bench_ecmult.c || cmake_object_order_depends_target_bench_ecmult
+build src/CMakeFiles/bench_ecmult.dir/bench_ecmult.c.o: C_COMPILER__bench_ecmult_unscanned_ReleaseDbg /home/iam/repos/secp256k1/src/bench_ecmult.c || cmake_object_order_depends_target_bench_ecmult
   DEFINES = -DCOMB_BLOCKS=43 -DCOMB_TEETH=6 -DECMULT_WINDOW_SIZE=15 -DENABLE_MODULE_ECDH=1 -DENABLE_MODULE_ELLSWIFT=1 -DENABLE_MODULE_EXTRAKEYS=1 -DENABLE_MODULE_MUSIG=1 -DENABLE_MODULE_SCHNORRSIG=1 -DUSE_ASM_X86_64=1 -DVALGRIND
   DEP_FILE = src/CMakeFiles/bench_ecmult.dir/bench_ecmult.c.o.d
   FLAGS = -O2 -g  -std=c90 -fvisibility=hidden -fdiagnostics-color=always -pedantic -Wall -Wcast-align -Wcast-align=strict -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef
@@ -298,7 +298,7 @@ build src/CMakeFiles/bench_ecmult.dir/bench_ecmult.c.o: C_COMPILER__bench_ecmult
 #############################################
 # Link the executable bin/bench_ecmult
 
-build bin/bench_ecmult: C_EXECUTABLE_LINKER__bench_ecmult_RelWithDebInfo src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o src/CMakeFiles/bench_ecmult.dir/bench_ecmult.c.o || src/secp256k1_precomputed
+build bin/bench_ecmult: C_EXECUTABLE_LINKER__bench_ecmult_ReleaseDbg src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o src/CMakeFiles/bench_ecmult.dir/bench_ecmult.c.o || src/secp256k1_precomputed
   FLAGS = -O2 -g
   OBJECT_DIR = src/CMakeFiles/bench_ecmult.dir
   POST_BUILD = :
@@ -316,7 +316,7 @@ build bin/bench_ecmult: C_EXECUTABLE_LINKER__bench_ecmult_RelWithDebInfo src/CMa
 
 build cmake_object_order_depends_target_noverify_tests: phony || cmake_object_order_depends_target_secp256k1_precomputed
 
-build src/CMakeFiles/noverify_tests.dir/tests.c.o: C_COMPILER__noverify_tests_unscanned_RelWithDebInfo /home/iam/repos/secp256k1/src/tests.c || cmake_object_order_depends_target_noverify_tests
+build src/CMakeFiles/noverify_tests.dir/tests.c.o: C_COMPILER__noverify_tests_unscanned_ReleaseDbg /home/iam/repos/secp256k1/src/tests.c || cmake_object_order_depends_target_noverify_tests
   DEFINES = -DCOMB_BLOCKS=43 -DCOMB_TEETH=6 -DECMULT_WINDOW_SIZE=15 -DENABLE_MODULE_ECDH=1 -DENABLE_MODULE_ELLSWIFT=1 -DENABLE_MODULE_EXTRAKEYS=1 -DENABLE_MODULE_MUSIG=1 -DENABLE_MODULE_SCHNORRSIG=1 -DUSE_ASM_X86_64=1 -DVALGRIND
   DEP_FILE = src/CMakeFiles/noverify_tests.dir/tests.c.o.d
   FLAGS = -O2 -g  -std=c90 -fvisibility=hidden -fdiagnostics-color=always -pedantic -Wall -Wcast-align -Wcast-align=strict -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef
@@ -333,7 +333,7 @@ build src/CMakeFiles/noverify_tests.dir/tests.c.o: C_COMPILER__noverify_tests_un
 #############################################
 # Link the executable bin/noverify_tests
 
-build bin/noverify_tests: C_EXECUTABLE_LINKER__noverify_tests_RelWithDebInfo src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o src/CMakeFiles/noverify_tests.dir/tests.c.o || src/secp256k1_precomputed
+build bin/noverify_tests: C_EXECUTABLE_LINKER__noverify_tests_ReleaseDbg src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o src/CMakeFiles/noverify_tests.dir/tests.c.o || src/secp256k1_precomputed
   FLAGS = -O2 -g
   OBJECT_DIR = src/CMakeFiles/noverify_tests.dir
   POST_BUILD = :
@@ -351,7 +351,7 @@ build bin/noverify_tests: C_EXECUTABLE_LINKER__noverify_tests_RelWithDebInfo src
 
 build cmake_object_order_depends_target_tests: phony || cmake_object_order_depends_target_secp256k1_precomputed
 
-build src/CMakeFiles/tests.dir/tests.c.o: C_COMPILER__tests_unscanned_RelWithDebInfo /home/iam/repos/secp256k1/src/tests.c || cmake_object_order_depends_target_tests
+build src/CMakeFiles/tests.dir/tests.c.o: C_COMPILER__tests_unscanned_ReleaseDbg /home/iam/repos/secp256k1/src/tests.c || cmake_object_order_depends_target_tests
   DEFINES = -DCOMB_BLOCKS=43 -DCOMB_TEETH=6 -DECMULT_WINDOW_SIZE=15 -DENABLE_MODULE_ECDH=1 -DENABLE_MODULE_ELLSWIFT=1 -DENABLE_MODULE_EXTRAKEYS=1 -DENABLE_MODULE_MUSIG=1 -DENABLE_MODULE_SCHNORRSIG=1 -DUSE_ASM_X86_64=1 -DVALGRIND -DVERIFY
   DEP_FILE = src/CMakeFiles/tests.dir/tests.c.o.d
   FLAGS = -O2 -g  -std=c90 -fvisibility=hidden -fdiagnostics-color=always -pedantic -Wall -Wcast-align -Wcast-align=strict -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef
@@ -368,7 +368,7 @@ build src/CMakeFiles/tests.dir/tests.c.o: C_COMPILER__tests_unscanned_RelWithDeb
 #############################################
 # Link the executable bin/tests
 
-build bin/tests: C_EXECUTABLE_LINKER__tests_RelWithDebInfo src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o src/CMakeFiles/tests.dir/tests.c.o || src/secp256k1_precomputed
+build bin/tests: C_EXECUTABLE_LINKER__tests_ReleaseDbg src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult.c.o src/CMakeFiles/secp256k1_precomputed.dir/precomputed_ecmult_gen.c.o src/CMakeFiles/tests.dir/tests.c.o || src/secp256k1_precomputed
   FLAGS = -O2 -g
   OBJECT_DIR = src/CMakeFiles/tests.dir
   POST_BUILD = :
@@ -386,7 +386,7 @@ build bin/tests: C_EXECUTABLE_LINKER__tests_RelWithDebInfo src/CMakeFiles/secp25
 
 build cmake_object_order_depends_target_exhaustive_tests: phony || .
 
-build src/CMakeFiles/exhaustive_tests.dir/tests_exhaustive.c.o: C_COMPILER__exhaustive_tests_unscanned_RelWithDebInfo /home/iam/repos/secp256k1/src/tests_exhaustive.c || cmake_object_order_depends_target_exhaustive_tests
+build src/CMakeFiles/exhaustive_tests.dir/tests_exhaustive.c.o: C_COMPILER__exhaustive_tests_unscanned_ReleaseDbg /home/iam/repos/secp256k1/src/tests_exhaustive.c || cmake_object_order_depends_target_exhaustive_tests
   DEFINES = -DCOMB_BLOCKS=43 -DCOMB_TEETH=6 -DECMULT_WINDOW_SIZE=15 -DENABLE_MODULE_ECDH=1 -DENABLE_MODULE_ELLSWIFT=1 -DENABLE_MODULE_EXTRAKEYS=1 -DENABLE_MODULE_MUSIG=1 -DENABLE_MODULE_SCHNORRSIG=1 -DUSE_ASM_X86_64=1 -DVALGRIND -DVERIFY
   DEP_FILE = src/CMakeFiles/exhaustive_tests.dir/tests_exhaustive.c.o.d
   FLAGS = -O2 -g  -std=c90 -fvisibility=hidden -fdiagnostics-color=always -pedantic -Wall -Wcast-align -Wcast-align=strict -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef
@@ -403,7 +403,7 @@ build src/CMakeFiles/exhaustive_tests.dir/tests_exhaustive.c.o: C_COMPILER__exha
 #############################################
 # Link the executable bin/exhaustive_tests
 
-build bin/exhaustive_tests: C_EXECUTABLE_LINKER__exhaustive_tests_RelWithDebInfo src/CMakeFiles/exhaustive_tests.dir/tests_exhaustive.c.o
+build bin/exhaustive_tests: C_EXECUTABLE_LINKER__exhaustive_tests_ReleaseDbg src/CMakeFiles/exhaustive_tests.dir/tests_exhaustive.c.o
   FLAGS = -O2 -g
   OBJECT_DIR = src/CMakeFiles/exhaustive_tests.dir
   POST_BUILD = :
@@ -421,7 +421,7 @@ build bin/exhaustive_tests: C_EXECUTABLE_LINKER__exhaustive_tests_RelWithDebInfo
 
 build cmake_object_order_depends_target_ctime_tests: phony || cmake_object_order_depends_target_secp256k1
 
-build src/CMakeFiles/ctime_tests.dir/ctime_tests.c.o: C_COMPILER__ctime_tests_unscanned_RelWithDebInfo /home/iam/repos/secp256k1/src/ctime_tests.c || cmake_object_order_depends_target_ctime_tests
+build src/CMakeFiles/ctime_tests.dir/ctime_tests.c.o: C_COMPILER__ctime_tests_unscanned_ReleaseDbg /home/iam/repos/secp256k1/src/ctime_tests.c || cmake_object_order_depends_target_ctime_tests
   DEFINES = -DCOMB_BLOCKS=43 -DCOMB_TEETH=6 -DECMULT_WINDOW_SIZE=15 -DENABLE_MODULE_ECDH=1 -DENABLE_MODULE_ELLSWIFT=1 -DENABLE_MODULE_EXTRAKEYS=1 -DENABLE_MODULE_MUSIG=1 -DENABLE_MODULE_SCHNORRSIG=1 -DUSE_ASM_X86_64=1 -DVALGRIND
   DEP_FILE = src/CMakeFiles/ctime_tests.dir/ctime_tests.c.o.d
   FLAGS = -O2 -g  -std=c90 -fvisibility=hidden -fdiagnostics-color=always -pedantic -Wall -Wcast-align -Wcast-align=strict -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef
@@ -438,7 +438,7 @@ build src/CMakeFiles/ctime_tests.dir/ctime_tests.c.o: C_COMPILER__ctime_tests_un
 #############################################
 # Link the executable bin/ctime_tests
 
-build bin/ctime_tests: C_EXECUTABLE_LINKER__ctime_tests_RelWithDebInfo src/CMakeFiles/ctime_tests.dir/ctime_tests.c.o | lib/libsecp256k1.so.2.2.2 || lib/libsecp256k1.so lib/libsecp256k1.so
+build bin/ctime_tests: C_EXECUTABLE_LINKER__ctime_tests_ReleaseDbg src/CMakeFiles/ctime_tests.dir/ctime_tests.c.o | lib/libsecp256k1.so.2.2.2 || lib/libsecp256k1.so lib/libsecp256k1.so
   FLAGS = -O2 -g
   LINK_LIBRARIES = -Wl,-rpath,/home/iam/repos/secp256k1/lib  lib/libsecp256k1.so.2.2.2
   OBJECT_DIR = src/CMakeFiles/ctime_tests.dir
