@@ -1,4 +1,5 @@
 name: Valid_QA
+
 on:
   workflow_dispatch:
   pull_request:
@@ -9,7 +10,132 @@ on:
       - 'main'
       - 'work'
       - '/release/*'
+env:
+  # buildcmd config
+  HOST: ''
+  WRAPPER_CMD: ''
+  WERROR_CFLAGS: '-Werror -pedantic-errors'
+  MAKEFLAGS: '-j4'
+  BUILD: 'check'
+  # secp256k1 config
+  ECMULTWINDOW: 15
+  ECMULTGENKB: 86
+  ASM: 'no'
+  WIDEMUL: 'auto'
+  WITH_VALGRIND: 'yes'
+  EXTRAFLAGS: ''
+  # secp256k1 modules
+  EXPERIMENTAL: 'no'
+  ECDH: 'no'
+  RECOVERY: 'no'
+  EXTRAKEYS: 'no'
+  SCHNORRSIG: 'no'
+  MUSIG: 'no'
+  ELLSWIFT: 'no'
+  # test options
+  SECP256K1_TEST_ITERS: 64
+  BENCH: 'yes'
+  SECP256K1_BENCH_ITERS: 2
+  CTIMETESTS: 'yes'
+  # run examples.
+  EXAMPLES: 'yes'
+  
 jobs:
+
+  docker_cache:
+    name: "Build Docker image"
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Buildx in Docker
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            network=host
+
+      - name: Build container
+        uses: docker/build-push-action@v5
+        with:
+          file: ./ci/linux-debian.Dockerfile
+          tags: linux-debian-image
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+
+  linux_debian:
+    name: "x86_64: Linux (Debian stable)"
+    runs-on: ubuntu-latest
+    needs: docker_cache
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration:
+          - env_vars: { WIDEMUL: 'int64',  RECOVERY: 'yes' }
+          - env_vars: { WIDEMUL: 'int64',                   ECDH: 'yes', EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes', ELLSWIFT: 'yes' }
+          - env_vars: { WIDEMUL: 'int128' }
+          - env_vars: { WIDEMUL: 'int128_struct',                                                             ELLSWIFT: 'yes' }
+          - env_vars: { WIDEMUL: 'int128', RECOVERY: 'yes',              EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes', ELLSWIFT: 'yes' }
+          - env_vars: { WIDEMUL: 'int128',                  ECDH: 'yes', EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes' }
+          - env_vars: { WIDEMUL: 'int128', ASM: 'x86_64',                                                     ELLSWIFT: 'yes' }
+          - env_vars: { WIDEMUL: 'auto'  , RECOVERY: 'yes',              EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes' }
+          - env_vars: { WIDEMUL: 'auto'  , CTIMETESTS: 'no',  RECOVERY: 'yes', ECDH: 'yes', EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes', CPPFLAGS: '-DVERIFY' }
+          - env_vars: { WIDEMUL: 'auto'  , BUILD: 'distcheck', WITH_VALGRIND: 'no', CTIMETESTS: 'no', BENCH: 'no' }
+          - env_vars: { WIDEMUL: 'auto'  , CPPFLAGS: '-DDETERMINISTIC' }
+          - env_vars: { WIDEMUL: 'auto'  , CFLAGS: '-O0', CTIMETESTS: 'no' }
+          - env_vars: { WIDEMUL: 'auto'  , CFLAGS: '-O1',     RECOVERY: 'yes', ECDH: 'yes', EXTRAKEYS: 'yes', SCHNORRSIG: 'yes', MUSIG: 'yes', ELLSWIFT: 'yes' }
+          - env_vars: { WIDEMUL: 'auto'  , ECMULTWINDOW: 2 , ECMULTGENKB: 2, }
+          - env_vars: { WIDEMUL: 'auto'  , ECMULTWINDOW: 4 , ECMULTGENKB: 86, }
+        cc:
+          - 'gcc'
+          - 'clang'
+          - 'gcc-snapshot'
+          - 'clang-snapshot'
+
+    env:
+      CC: ${{ matrix.cc }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: CI script
+        env: ${{ matrix.configuration.env_vars }}
+        uses: ./.github/actions/run-in-docker-action
+        with:
+          dockerfile: ./ci/linux-debian.Dockerfile
+          tag: linux-debian-image
+
+      - name: Read tests.log
+      - run: cat tests.log || true
+        if: ${{ always() }}
+        
+      - name: Read noverify_tests.log
+      - run: cat noverify_tests.log || true
+        if: ${{ always() }}
+        
+      - name: Read exhaustive_tests.log
+      - run: cat exhaustive_tests.log || true
+        if: ${{ always() }}
+        
+      - name: Read ctime_tests.log
+      - run: cat ctime_tests.log || true
+        if: ${{ always() }}
+        
+      - name: Read bench.log
+      - run: cat bench.log || true
+        if: ${{ always() }}
+        
+      - name: Read config.log
+      - run: cat config.log || true
+        if: ${{ always() }}
+        
+      - name: Read test_env.log
+      - run: cat test_env.log || true
+        if: ${{ always() }}
+        
+      - name: CI env
+        run: env
+        if: ${{ always() }}
+        
   qodana:
     runs-on: ubuntu-latest
     permissions:
